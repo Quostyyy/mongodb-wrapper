@@ -2,8 +2,24 @@
 
 ---
 
-### Example use:
+#### Repository(Maven)
+```xml
+<repository>
+  <id>quosty-repository-releases</id>
+  <name>quosty-dev</name>
+  <url>https://repo.quosty.dev/releases</url>
+</repository>
+```
+#### Dependency(Maven)
+```xml
+<dependency>
+  <groupId>dev.quosty</groupId>
+  <artifactId>mongodb-wrapper</artifactId>
+  <version>1.0.0</version>
+</dependency>
+```
 
+#### Example use:
 
 ```java
 public class ExampleApplication {
@@ -38,8 +54,7 @@ public class ExampleApplication {
 
 ```
 
-
-### Example Object
+#### Example Object
 ```java
 @MongodbEntity(
     database = "shopDatabase",
