@@ -27,12 +27,12 @@ public class ExampleApplication {
     /*
     Update in database
      */
-    mongodbWrapper.update(exampleObject);
+    mongodbWrapper.updateOne(exampleObject);
     
     /*
     Delete from database
      */
-    mongodbWrapper.delete(exampleObject);
+    mongodbWrapper.deleteOne(exampleObject);
   }
 }
 
