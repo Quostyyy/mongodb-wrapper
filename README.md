@@ -15,7 +15,7 @@
 <dependency>
   <groupId>dev.quosty</groupId>
   <artifactId>mongodb-wrapper</artifactId>
-  <version>1.0</version>
+  <version>1.1-SNAPSHOT</version>
 </dependency>
 ```
 
