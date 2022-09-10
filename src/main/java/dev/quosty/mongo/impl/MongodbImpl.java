@@ -9,6 +9,8 @@ public interface MongodbImpl {
 
   <T> void insertOne(T value);
 
+  <T> void insertMany(List<T> value);
+
   <T> void deleteOne(T value);
 
   <T> void deleteMany(T value, Bson filters);
@@ -22,5 +24,6 @@ public interface MongodbImpl {
   <T> void updateMany(List<T> value, Bson filters);
 
   MongoCollection<Document> getDatabaseCollection(Class<?> value);
+
 
 }

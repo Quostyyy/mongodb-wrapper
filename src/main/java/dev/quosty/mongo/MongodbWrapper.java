@@ -25,10 +25,14 @@ public class MongodbWrapper implements MongodbImpl {
   public MongodbWrapper(String mongodbUri) {
     this.mongoClient = MongoClients.create(mongodbUri);
   }
-
   @Override
   public <T> void insertOne(T value) {
     this.getDatabaseCollection(value.getClass()).insertOne(Document.parse(this.gson.toJson(value)));
+  }
+
+  @Override
+  public <T> void insertMany(List<T> value) {
+    value.forEach(this::insertOne);
   }
 
   @Override
