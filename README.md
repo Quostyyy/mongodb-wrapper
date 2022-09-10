@@ -22,6 +22,9 @@
 #### Example use:
 
 ```java
+import java.util.List;
+import org.bson.conversions.Bson;
+
 public class ExampleApplication {
 
   public static void main(String[] args) {
@@ -36,19 +39,44 @@ public class ExampleApplication {
     ExampleObject exampleObject = new ExampleObject("test", UUID.randomUUID());
     
     /*
-    Save to database
+    Insert one object to database.
      */
     mongodbWrapper.insertOne(exampleObject);
     
     /*
-    Update in database
-     */
-    mongodbWrapper.updateOne(exampleObject);
-    
-    /*
-    Delete from database
+    Delete none object from database.
      */
     mongodbWrapper.deleteOne(exampleObject);
+    
+    /*
+    Delete list of objects from database.
+     */
+    mongodbWrapper.deleteMany(List.of(exampleObject, exampleObject));
+  
+    /*
+    Delete list of objects from database with custom filters.
+     */
+    mongodbWrapper.deleteMany(List.of(exampleObject, exampleObject), Filters.eq("key", value));
+    
+    /*
+    Update one object in database.
+     */
+    mongodbWrapper.updateOne(exampleObject);
+   
+    /*
+    Update object in database with custom filters.
+     */
+    mongodbWrapper.updateOne(exampleObject, Filters.eq("key", value));
+    
+    /*
+    Update list of objects in database.
+     */
+    mongodbWrapper.updateMany(List.of(exampleObject, exampleObject));
+
+    /*
+    Update list of objects in database with custom filters.
+     */
+    mongodbWrapper.updateMany(List.of(exampleObject, exampleObject), Filters.eq("key", value));
   }
 }
 
