@@ -42,10 +42,12 @@ public class ExampleApplication {
     Insert one object to database.
      */
     mongodbWrapper.insertOne(exampleObject);
+    
     /*
     Insert list of objects to database.
      */
     mongodbWrapper.insertMany(List.of(exampleObject, exampleObject));
+    
     /*
     Delete none object from database.
      */
