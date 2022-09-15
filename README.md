@@ -22,6 +22,7 @@
 #### Example use:
 
 ```java
+import com.mongodb.client.model.Filters;
 import java.util.List;
 import org.bson.conversions.Bson;
 
@@ -82,6 +83,16 @@ public class ExampleApplication {
     Update list of objects in database with custom filters.
      */
     mongodbWrapper.updateMany(List.of(exampleObject, exampleObject), Filters.eq("key", value));
+    
+    /*
+    Find one object in database.
+     */
+    mongodbWrapper.find(exampleObject);
+    
+    /*
+     Find one object in database with custom filters.   
+     */
+    mongodbWrapper.find(exampleObject, Filters.eq("key", value));
   }
 }
 
