@@ -1,5 +1,7 @@
 package dev.quosty.mongo;
 
+import com.mongodb.Block;
+import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
@@ -7,7 +9,10 @@ import com.mongodb.client.model.Filters;
 import dev.quosty.mongo.annotations.MongodbEntity;
 import dev.quosty.mongo.helper.GsonHelper;
 import dev.quosty.mongo.impl.MongodbImpl;
+import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Consumer;
 import org.bson.Document;
 import org.bson.conversions.Bson;
 
@@ -56,6 +61,16 @@ public class MongodbWrapper implements MongodbImpl {
   @Override
   public <T> void updateMany(List<T> value, Bson filters) {
     value.forEach(object -> this.updateOne(object, filters));
+  }
+
+  @Override
+  public <T> FindIterable<Document> find(T value) {
+    return this.getDatabaseCollection(value.getClass()).find(Filters.eq("_id", Document.parse(GsonHelper.getGson().toJson(value))));
+  }
+
+  @Override
+  public <T> FindIterable<Document> find(T value, Bson filters) {
+    return this.getDatabaseCollection(value.getClass()).find(filters);
   }
 
   @Override

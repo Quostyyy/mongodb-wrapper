@@ -1,5 +1,6 @@
 package dev.quosty.mongo.impl;
 
+import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import java.util.List;
 import org.bson.Document;
@@ -22,6 +23,10 @@ public interface MongodbImpl {
   <T> void updateMany(List<T> value);
 
   <T> void updateMany(List<T> value, Bson filters);
+
+  <T> FindIterable<Document> find(T value);
+
+  <T> FindIterable<Document> find(T value, Bson filters);
 
   MongoCollection<Document> getDatabaseCollection(Class<?> value);
 
