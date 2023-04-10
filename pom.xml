@@ -18,7 +18,7 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-shade-plugin</artifactId>
-        <version>3.3.1-SNAPSHOT</version>
+        <version>3.3.0</version>
         <executions>
           <execution>
             <phase>package</phase>
@@ -30,10 +30,6 @@
                 <relocation>
                   <pattern>com.google.gson</pattern>
                   <shadedPattern>dev.quosty.shade.gson</shadedPattern>
-                </relocation>
-                <relocation>
-                  <pattern>com.mongodb</pattern>
-                  <shadedPattern>dev.quosty.shade.mongodb</shadedPattern>
                 </relocation>
                 <relocation>
                   <pattern>org.bson</pattern>
@@ -52,7 +48,7 @@
       <groupId>org.mongodb</groupId>
       <artifactId>mongo-java-driver</artifactId>
       <version>3.12.11</version>
-      <scope>compile</scope>
+      <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>com.google.code.gson</groupId>
