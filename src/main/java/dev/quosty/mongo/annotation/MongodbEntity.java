@@ -1,4 +1,4 @@
-package dev.quosty.mongo.annotations;
+package dev.quosty.mongo.annotation;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -9,7 +9,8 @@ import java.lang.annotation.Target;
 @Target(ElementType.TYPE)
 public @interface MongodbEntity {
 
-  String collection() default "";
-  String database() default "";
+    String collection() default "example";
+
+    String database() default "example";
 
 }

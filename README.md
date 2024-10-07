@@ -15,95 +15,83 @@
 <dependency>
   <groupId>dev.quosty</groupId>
   <artifactId>mongodb-wrapper</artifactId>
-  <version>1.1-SNAPSHOT</version>
+  <version>2.0.0</version>
 </dependency>
 ```
 
 #### Example use:
 
 ```java
+import com.mongodb.client.model.Filters;
+
 import java.util.List;
-import org.bson.conversions.Bson;
 
 public class ExampleApplication {
 
-  public static void main(String[] args) {
-    /*
-    Create a new instance of the MongodbWrapper and connect to the database
-     */
-    MongodbWrapper mongodbWrapper = new MongodbWrapper("mongodb://localhost:27017");
+    public static void main(String[] args) {
+        //Create a new instance of the MongoClientInitializer and connect to the database
+        MongoClientInitializer initializer = new MongoClientInitializer("mongodb://localhost:27017");
+        //new MongoClientInitializer("uri", gson);
+        //new MongoClientInitializer(mongoClient);
+        //new MongoClientInitializer(mongoClient, gson)
 
-    /*
-    Create example object
-     */
-    ExampleObject exampleObject = new ExampleObject("test", UUID.randomUUID());
-    
-    /*
-    Insert one object to database.
-     */
-    mongodbWrapper.insertOne(exampleObject);
-    
-    /*
-    Insert list of objects to database.
-     */
-    mongodbWrapper.insertMany(List.of(exampleObject, exampleObject));
-    
-    /*
-    Delete none object from database.
-     */
-    mongodbWrapper.deleteOne(exampleObject);
-    
-    /*
-    Delete list of objects from database.
-     */
-    mongodbWrapper.deleteMany(List.of(exampleObject, exampleObject));
-  
-    /*
-    Delete list of objects from database with custom filters.
-     */
-    mongodbWrapper.deleteMany(List.of(exampleObject, exampleObject), Filters.eq("key", value));
-    
-    /*
-    Update one object in database.
-     */
-    mongodbWrapper.updateOne(exampleObject);
-   
-    /*
-    Update object in database with custom filters.
-     */
-    mongodbWrapper.updateOne(exampleObject, Filters.eq("key", value));
-    
-    /*
-    Update list of objects in database.
-     */
-    mongodbWrapper.updateMany(List.of(exampleObject, exampleObject));
+        MongodbWrapperImpl wrapper = initializer.getMongodbWrapper();
 
-    /*
-    Update list of objects in database with custom filters.
-     */
-    mongodbWrapper.updateMany(List.of(exampleObject, exampleObject), Filters.eq("key", value));
-  }
+        //Create example object
+        ExampleObject exampleObject = new ExampleObject("test");
+
+        //Insert one object to database.
+        wrapper.insertOne(exampleObject);
+
+        //Insert list of objects to database.
+        wrapper.insertMany(List.of(exampleObject, exampleObject));
+
+        //Delete none object from database.
+        wrapper.deleteOne(exampleObject);
+
+        //Delete list of objects from database.
+        wrapper.deleteMany(exampleObject, Filters.eq("key"));
+
+        //Delete list of objects from database with custom filters.
+        wrapper.deleteMany(List.of(exampleObject, exampleObject), Filters.eq("key", value));
+
+        //Update one object in database.
+        wrapper.updateOne(exampleObject);
+
+        //Update object in database with custom filters.
+        wrapper.updateOne(exampleObject, Filters.eq("key", value));
+
+        //Update list of objects in database.
+        wrapper.updateMany(List.of(exampleObject, exampleObject));
+
+        //Update list of objects in database with custom filters.
+        wrapper.updateMany(List.of(exampleObject, exampleObject), Filters.eq("key", value));
+
+        //Find object in database with custom filter
+        ExampleObject object = wrapper.findOne(ExampleObject.class, Filters.eq("key", value));
+
+        //Find list of objects with custom filter
+        List<ExampleObject> objects = wrapper.findMany(ExampleObject.class, Filters.eq("key", value));
+
+        //Checks if the element exists 
+        boolean status = wrapper.isExists(ExampleObject.class, Filters.eq("key", value));
+    }
 }
-
 ```
 
 #### Example Object
 ```java
-@MongodbEntity(
-    database = "shopDatabase",
-    collection = "shopCollection"
+    @MongodbEntity(
+        database = "database",
+        collection = "collection"
 )
 public class ExampleObject {
-  
-  @SerializedName("_id")
-  private final String userName; 
-  
-  @Exclude
-  private final UUID uuid;
 
-  public ExampleObject(String userName, UUID uuid) {
-    this.userName = userName;
-    this.uuid = uuid;
-  }
+    @SerializedName("_id")
+    private final String userName;
+
+    public ExampleObject(String userName) {
+        this.userName = userName;
+    }
 }
 ```
