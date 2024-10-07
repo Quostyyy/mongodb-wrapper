@@ -35,7 +35,8 @@ public class MongodbWrapperImpl implements MongodbWrapper {
 
     @Override
     public <T> void deleteOne(T value) {
-        this.getDatabaseCollection(value.getClass()).findOneAndDelete(Filters.eq("_id", Document.parse(this.gson.toJson(value))));
+        this.getDatabaseCollection(value.getClass()).findOneAndDelete(
+                Filters.eq("_id", Document.parse(this.gson.toJson(value)).get("_id")));
     }
 
     @Override
@@ -45,7 +46,10 @@ public class MongodbWrapperImpl implements MongodbWrapper {
 
     @Override
     public <T> void updateOne(T value) {
-        this.getDatabaseCollection(value.getClass()).findOneAndUpdate(Filters.eq("_id"), Document.parse(this.gson.toJson(value)));
+        this.getDatabaseCollection(value.getClass()).findOneAndUpdate(
+                Filters.eq("_id", Document.parse(this.gson.toJson(value)).get("_id")),
+                Document.parse(this.gson.toJson(value))
+        );
     }
 
     @Override
